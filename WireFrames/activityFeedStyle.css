@@ -1,0 +1,26 @@
+:root {
+    --theme-queen-blue: #3C6997;
+    --theme-isabelline: #EBEBEB;
+    --theme-oxford-blue: #032B43;
+    --theme-pearl: #E5F2C9;
+}
+
+.icon::before {
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+}
+
+.news::before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 400;
+    content: "\f1ea";
+    color: var(--theme-oxford-blue);
+}
+
+.metrics::before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f201";
+    color: var(--theme-queen-blue);
+}

@@ -1,0 +1,27 @@
+swagger: "2.0"
+
+info:
+  version: 0.1a
+  title: improvementTrackerAPI
+  description: Demonstrator API for Improvement Tracker SaaS
+
+paths:
+  /improvements/alerts:
+    get:
+      summary: Get the alert messages
+      description: Get the alert messages for the current user
+      operationId: improvements.alerts
+      responses:
+        200:
+          description: JSON array of alerts to display
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                message:
+                  type: string
+                  example: Get started and create your first improvement!

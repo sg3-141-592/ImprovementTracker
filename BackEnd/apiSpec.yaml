@@ -36,3 +36,38 @@ paths:
       responses:
         200:
           description: Created
+  /improvements/objectives:
+    get:
+      summary: Get list of objectives
+      operationId: improvements.objectives
+      responses:
+        200:
+          description: JSON array of objectives to display
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+    post:
+      summary: Add new objective
+      operationId: improvements.addObjective
+      parameters:
+        - name: NewObjective
+          in: body
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                example: GPTW
+              description:
+                type: string
+                example: Improve morale
+          required: true
+      responses: 
+        200:
+          description: OK

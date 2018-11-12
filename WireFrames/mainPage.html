@@ -24,7 +24,6 @@
     <div id="app" class="container">
         <div class="row">
             <div class="col">
-
             </div>
             <div class="col-8">
                 <!-- Render user alerts -->                  
@@ -37,13 +36,12 @@
 
                 <!-- Title and description -->
                 <form>
+
+                    <!-- Title/Description -->
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Title</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" placeholder="ImprovementTitle">
-                            <small class="form-text text-muted">
-                                Keep it descriptive!
-                            </small>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -52,23 +50,66 @@
                             <textarea rows="3" class="form-control" placeholder="Description"></textarea>
                         </div>
                     </div>
+
+                    <!-- Objectives -->
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Objectives</label>
                         <div class="col-sm-10">
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Dropdown
+                                    Add
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                    <button class="dropdown-item" type="button">Lead Time Reduction</button>
-                                    <button class="dropdown-item" type="button">Unique Selling Points</button>
-                                    <button class="dropdown-item" type="button">Great Place to Work</button>
+                                    <button v-for="objective in objectives" class="dropdown-item" type="button">{{ objective.name }}</button>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Add New Objective</a>
+                                    <!-- Open a new dialog to add objectives -->
+                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModalCenter">
+                                        Add New Objective
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Add new objective dialog -->
+                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Manage Objectives</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group row">
+                                            <input id="objectiveName" v-model="objName" type="text" class="form-control" placeholder="New Objective">
+                                        </div>
+                                        <div class="form-group row">
+                                            <textarea id="objectiveDescription" v-model="objDescription" rows="3" class="form-control" placeholder="Business Objective Description"></textarea>
+                                        </div>
+                                        <div class="form-group row">
+                                            <button v-on:click="addObjective" type="button" id="addObjective" class="btn btn-light">Add</button>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="list-group">
+                                                <a href="#" v-for="objective in objectives" class="list-group-item list-group-item-action flex-column align-items-start">
+                                                    <h5 class="mb-1">{{ objective.name }}</h5>
+                                                    <p class="mb-1">{{ objective.description }}</p>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Predicted Benefits -->
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Predicted Benefits</label>
                         <div class="col-sm-10">
@@ -81,7 +122,9 @@
                                     <button class="dropdown-item" type="button">Time</button>
                                     <button class="dropdown-item" type="button">Great Place to Work</button>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Add New Benefit Category</a>
+                                    <a class="dropdown-item" href="#">
+                                        Add New Benefit Category
+                                    </a>
                                 </div>
                             `</div>
                         </div>
@@ -139,15 +182,48 @@
                     category: "Great Place to Work",
                     description: `Users have access to best in class
                     tooling, and feel listened to`
-                }]
+                }],
+                objName: null,
+                objDescription: null,
+                objectives: null
             },
             mounted () {
                 axios
                     .get("http://127.0.0.1:8080/improvements/alerts")
                     .then(response => (this.alertData = response.data))
-                    .catch(error => console.log(error))
+                    .catch(error => console.log(error));
+                axios
+                    .get("http://127.0.0.1:8080/improvements/objectives")
+                    .then(response => (app.objectives = response.data))
+                    .catch(error => console.log(error));
+            },
+            methods: {
+                addObjective: function () {
+                    axios
+                        .post("http://127.0.0.1:8080/improvements/objectives", {
+                            name: this.objName,
+                            description: this.objDescription
+                        })
+                        .then(response => console.log(response))
+                        .catch(error => console.log(error));
+                    console.log("Hello");
+                }
             }
         });
+
+        // Set up the bootstrap add objective event
+        function addObjective(nameStr, descriptionStr)
+        {
+            axios
+                .post("http://127.0.0.1:8080/improvements/objectives", {
+                    name: nameStr,
+                    description: descriptionStr
+                })
+                .then(response => console.log(response))
+                .catch(error => console.log(error));
+                // Force reload of objectives on the page
+                
+        }
     </script>
 
 </body>

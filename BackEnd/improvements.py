@@ -17,3 +17,17 @@ def dismissAlert(alertnum):
 ## ----------------------------------------------------------
 ## Objectives
 ## ----------------------------------------------------------
+objectivesData = [{'name': "Great Place to Work",
+                   'description': "Improve the business for the employees"},
+                  {'name': "Lead Time Reduction",
+                   'description': "Get out products out the door quicker"},
+                  {'name': "Reduce Cost",
+                   'description': "Bring down the cost of our products"}]
+
+def objectives():
+        return objectivesData
+
+def addObjective(NewObjective):
+        objectivesData.append({'name': NewObjective['name'],
+                               'description': NewObjective['description']})
+        return 200

@@ -25,3 +25,14 @@ paths:
                 message:
                   type: string
                   example: Get started and create your first improvement!
+    put:
+      summary: Dismiss an alert message
+      operationId: improvements.dismissAlert
+      parameters:
+        - in: body
+          name: alertnum
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Created

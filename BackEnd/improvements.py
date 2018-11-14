@@ -14,6 +14,7 @@ def dismissAlert(alertnum):
             alertsData.remove(alert)
     print(alertnum)
 
+
 ## ----------------------------------------------------------
 ## Objectives
 ## ----------------------------------------------------------

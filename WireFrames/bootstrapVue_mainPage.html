@@ -53,7 +53,7 @@
 
                         <!-- Predicted Benefits -->
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Predicted Benefits</label>
+                            <label class="col-sm-2 col-form-label">Benefits</label>
                             <div class="col-sm-10">
                                 
                                 <!-- Add new benefit dropdown -->
@@ -70,36 +70,8 @@
     </div>
     
     <script src="userAlertComponent.js"></script>
+    <script src="addBenefitsComponent.js"></script>
     <script>
-        // Add benefits component
-        Vue.component('add-benefits', {
-            props: {benefits : Array},
-            template:
-            `
-            <!-- Add new benefit dropdown -->
-            <div>
-                <b-dropdown text="Add" class="m-md-2">
-                    <b-dropdown-item v-for="benefit in benefits"
-                        :key=benefit.id @click="addBenefit">
-                        {{ benefit.name }}
-                    </b-dropdown-item>
-                    <b-dropdown-divider></b-dropdown-divider>
-                    <b-dropdown-item>Add new Benefit Category</b-dropdown-item>
-                </b-dropdown>
-            </div>
-            `,
-            data: function () {
-                return {
-                    addedBenefits: null
-                }
-            },
-            methods: {
-                addBenefit: function ()
-                {
-                    console.log("Hi");
-                }
-            }
-        });
         // Main app component
         var app = new Vue({
             el: '#app',

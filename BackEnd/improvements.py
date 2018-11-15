@@ -63,4 +63,3 @@ def initBenefits():
 
 def getBenefits():
         return benefitsData
-

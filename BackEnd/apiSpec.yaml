@@ -43,7 +43,7 @@ paths:
   /improvements/objectives:
     get:
       summary: Get list of objectives
-      operationId: improvements.objectives
+      operationId: improvements.getObjectives
       responses:
         200:
           description: JSON array of objectives to display
@@ -75,3 +75,21 @@ paths:
       responses: 
         200:
           description: OK
+  /improvements/benefits:
+    get:
+      summary: Get list of benefit categories
+      operationId: improvements.getBenefits
+      responses:
+        200:
+          description: JSON array of benefits to display
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                id:
+                  type: integer

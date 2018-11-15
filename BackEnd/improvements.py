@@ -27,10 +27,40 @@ objectivesData = [{'name': "Great Place to Work",
                   {'name': "Reduce Cost",
                    'description': "Bring down the cost of our products"}]
 
-def objectives():
+def initObjectives():
+        print("Loading objectives data")
+
+def getObjectives():
         return objectivesData
 
 def addObjective(NewObjective):
         objectivesData.append({'name': NewObjective['name'],
                                'description': NewObjective['description']})
         return 200
+
+
+## ----------------------------------------------------------
+## Benefits
+## ----------------------------------------------------------
+benefitsData = [{
+                    'id': 1,
+                    'name': "Time",
+                    'description': "Users reduce the amount of time they need to spend reviewing work"
+                },
+                {
+                    'id': 2,
+                    'name': "Great Place to Work",
+                    'description': "Users have access to best in class tooling, and feel listened to"
+                },
+                {
+                    'id': 3,
+                    'name': "Automation",
+                    'description': "Increase quality through automation, and reduce effort"
+                }]
+
+def initBenefits():
+        print("Loading Benefits Data")
+
+def getBenefits():
+        return benefitsData
+

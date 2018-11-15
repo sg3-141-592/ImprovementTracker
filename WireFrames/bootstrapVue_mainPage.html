@@ -13,36 +13,74 @@
     <!-- Add this after vue.js -->
     <script src="//unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
     <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+
+    <!-- Markdown Editor -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simplemde/1.11.2/simplemde.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simplemde/1.11.2/simplemde.min.css"/>
+
+    <!-- Application Themes -->
+    <link type="text/css" rel="stylesheet" href="style.css"/>
 </head>
 <body>
-    <div id="app">
-        <user-alert v-for="alert in alertData" :key=alert.id :alert-msg=alert.message></user-alert>
+    <div id="app" class="container">
+        <div class="col"></div>
+        <div class="col-10 col-centered">
+            <!-- Display user alerts -->
+            <user-alert v-for="alert in alertData" :key=alert.id :alert-msg=alert.message></user-alert>
+            <!-- Main form-->
+            <div class="card">
+                <div class="card-header">
+                    New Improvement
+                </div>
+                <div class="card-body">
+                    <!-- -->
+                    <form>
+
+                        <!-- Title/Description -->
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Title</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="...">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Description</label>
+                            <div class="col-sm-10">
+                                <textarea rows="3" class="form-control" placeholder="..."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Predicted Benefits -->
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Predicted Benefits</label>
+                            <div class="col-sm-10">
+                                <!-- Add new benefit dropdown -->
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Add
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                        <button class="dropdown-item" type="button">Time</button>
+                                        <button class="dropdown-item" type="button">Great Place to Work</button>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#">
+                                            Add New Benefit Category
+                                        </a>
+                                    </div>
+                                `</div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col"></div>
     </div>
     
+    <script src="userAlertComponent.js"></script>
     <script>
-        // User alert component
-        Vue.component('user-alert', {
-            props: ['alert-msg'],
-            template:
-            `
-            <b-alert show dismissible @dismissed="dismissAlert">
-                {{ alertMsg }}
-            </b-alert>
-            `,
-            methods: {
-                // Mark an alert as read so user doesn't see it more than once
-                dismissAlert: function ()
-                {
-                    axios
-                        .put("http://127.0.0.1:8080/improvements/alerts", {
-                            alertnum: 1
-                        })
-                        .then(response => console.log(response))
-                        .catch(error => console.log(error));
-                }
-            }
-        });
-
         // Main app component
         var app = new Vue({
             el: '#app',

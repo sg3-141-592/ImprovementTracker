@@ -10,7 +10,7 @@ paths:
     get:
       summary: Get the alert messages
       description: Get the alert messages for the current user
-      operationId: improvements.alerts
+      operationId: improvements.getAlerts
       responses:
         200:
           description: JSON array of alerts to display
@@ -25,17 +25,21 @@ paths:
                 message:
                   type: string
                   example: Get started and create your first improvement!
-    put:
+    post:
       summary: Dismiss an alert message
       operationId: improvements.dismissAlert
       parameters:
-        - in: body
-          name: alertnum
+        - name: DismissAlertContent
+          in: body
           schema:
-            type: integer
+            type: object
+            properties:
+              alertNum:
+                type: integer
+          required: true
       responses:
         200:
-          description: Created
+          description: OK
   /improvements/objectives:
     get:
       summary: Get list of objectives
@@ -66,7 +70,7 @@ paths:
                 example: GPTW
               description:
                 type: string
-                example: Improve morale
+                example:  Improve morale
           required: true
       responses: 
         200:

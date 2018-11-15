@@ -2,18 +2,20 @@
 ## Alerts
 ## ----------------------------------------------------------
 alertsData = [{'id': 1, 'message': "Get started and create your first improvement!"},
-              {'id': 2, 'message': "You can customise the benefits areas users can modify!"}]
+              {'id': 2, 'message': "You can customise the benefits areas users can modify!"},
+              {'id': 3, 'message': "Add some organisational objectives!"}]
 
-def alerts():
+def initAlerts():
+    print("Loading user alerts")
+
+def getAlerts():
     return alertsData
 
-def dismissAlert(alertnum):
+def dismissAlert(DismissAlertContent):
     # Find the matching alert number
     for alert in alertsData:
-        if alert['id'] == alertnum:
+        if alert['id'] == DismissAlertContent['alertNum']:
             alertsData.remove(alert)
-    print(alertnum)
-
 
 ## ----------------------------------------------------------
 ## Objectives

@@ -16,11 +16,14 @@ Vue.component('add-benefits', {
             </div>
         </div>
         <!-- Modify benefits -->
-        <div v-for="newBenefit in addedBenefits">
+        <div v-for="newBenefit in addedBenefits" :key=newBenefit.id>
             <div class="form-group row">
                 <b-card no-body class="w-100" border-variant="secondary">
                     <b-card-header>
                         {{ getBenefit(newBenefit.benefitType) }}
+                        <a class="close" aria-label="close" @click="removeBenefit(newBenefit.id)">
+                            &times;
+                        </a>
                     </b-card-header>
                     <b-card-body>
                         <textarea rows="3" class="form-control">{{ newBenefit.description }}</textarea>
@@ -32,14 +35,14 @@ Vue.component('add-benefits', {
     `,
     data: function () {
         return {
-            addedBenefits: [{
-                benefitType: 1,
-                description: "Users have access to the best tool for doing merges"
-            }],
+            addedBenefits: [],
+            benefitId: 1,
             selectedItem: null
         }
     },
     methods: {
+        // Find the heading for the new benefit window, based on the benefit id
+        // Need to look at refactoring, maybe using a dictionary object
         getBenefit: function (id)
         {
             // Find the matching item
@@ -57,9 +60,18 @@ Vue.component('add-benefits', {
             }
             return match;
         },
+        // Add a new benefit window
         addBenefit: function ()
         {
-            this.addedBenefits.push({ benefitType: this.selectedItem, description: "..." });
+            this.addedBenefits.push({ benefitType: this.selectedItem, description: "...", id: this.benefitId });
+            this.benefitId++;
+        },
+        // Close a benefits window
+        removeBenefit: function (id)
+        {
+            this.addedBenefits = _.remove(this.addedBenefits, function(n) {
+                return n.id != id;
+            });
         }
     }
 });

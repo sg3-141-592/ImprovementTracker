@@ -14,6 +14,9 @@
     <script src="//unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
     <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
 
+    <!-- Lodash -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.js"></script>
+
     <!-- Markdown Editor -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/simplemde/1.11.2/simplemde.min.js"></script>
     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simplemde/1.11.2/simplemde.min.css"/>
@@ -27,50 +30,18 @@
         <div class="col-10 col-centered">
             <!-- Display user alerts -->
             <user-alert v-for="alert in alertData" :key=alert.id :alert-msg=alert.message></user-alert>
-            <!-- Main form-->
-            <div class="card">
-                <div class="card-header">
-                    New Improvement
-                </div>
-                <div class="card-body">
-                    <!-- -->
-                    <form>
 
-                        <!-- Title/Description -->
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Title</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" placeholder="...">
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Description</label>
-                            <div class="col-sm-10">
-                                <textarea rows="3" class="form-control" placeholder="..."></textarea>
-                            </div>
-                        </div>
-
-                        <!-- Predicted Benefits -->
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Benefits</label>
-                            <div class="col-sm-10">
-                                
-                                <!-- Add new benefit dropdown -->
-                                <add-benefits :benefits=benefitsData></add-benefits>
-
-                            </div>
-                        </div>
-
-                    </form>
-                </div>
-            </div>
+            <b-btn v-b-model.modal1>New Improvement</b-btn>
+            
+            <!-- Add improvement form -->
+            <add-improvement></add-improvement>
         </div>
         <div class="col"></div>
     </div>
     
     <script src="userAlertComponent.js"></script>
     <script src="addBenefitsComponent.js"></script>
+    <script src="addImprovementComponent.js"></script>
     <script>
         // Main app component
         var app = new Vue({
@@ -84,11 +55,6 @@
                 axios
                     .get("http://127.0.0.1:8080/improvements/alerts")
                     .then(response => (this.alertData = response.data))
-                    .catch(error => console.log(error));
-                // Load benefits data
-                axios
-                    .get("http://127.0.0.1:8080/improvements/benefits")
-                    .then(response => (this.benefitsData = response.data))
                     .catch(error => console.log(error));
             }
         });

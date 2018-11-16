@@ -20,12 +20,16 @@ def dismissAlert(DismissAlertContent):
 ## ----------------------------------------------------------
 ## Objectives
 ## ----------------------------------------------------------
-objectivesData = [{'name': "Great Place to Work",
+objectivesData = [{'id': 1,
+                   'name': "Great Place to Work",
                    'description': "Improve the business for the employees"},
-                  {'name': "Lead Time Reduction",
+                  {'id': 2,
+                   'name': "Lead Time Reduction",
                    'description': "Get out products out the door quicker"},
-                  {'name': "Reduce Cost",
+                  {'id': 3,
+                   'name': "Reduce Cost",
                    'description': "Bring down the cost of our products"}]
+
 
 def initObjectives():
         print("Loading objectives data")

@@ -12,6 +12,7 @@ paths:
   /improvements:
     get:
       summary: Get list of improvements
+      operationId: improvements.getImprovements
       responses:
         200:
           description: Successful get

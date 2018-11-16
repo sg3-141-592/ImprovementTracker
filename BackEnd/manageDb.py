@@ -57,6 +57,9 @@ class Improvement(Base):
 
     benefits = relationship("Benefit")
 
+def getImprovements():
+    return dbSession.query(Improvement).all()
+
 ## -------------------------------------------------
 ## Benefit
 ## -------------------------------------------------

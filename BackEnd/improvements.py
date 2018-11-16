@@ -52,3 +52,18 @@ def getBenefits():
         for benefit in benefitsData:
                 jsonBenefits.append(manageDb.as_dict(benefit))
         return jsonBenefits
+
+## ----------------------------------------------------------
+## Improvements
+## ----------------------------------------------------------
+improvementsData = manageDb.getImprovements()
+
+def getImprovements():
+        jsonImprovements = []
+        for improvement in improvementsData:
+                item = manageDb.as_dict(improvement)
+                item['benefits'] = []
+                for a in improvement.benefits:
+                        item['benefits'].append(manageDb.as_dict(a))
+                jsonImprovements.append(item)
+        return jsonImprovements

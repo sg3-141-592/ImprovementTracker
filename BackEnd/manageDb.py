@@ -30,19 +30,50 @@ def getObjectives():
     return dbSession.query(Objectives).all()
 
 ## -------------------------------------------------
-## Benefits
+## BenefitTypes
 ## -------------------------------------------------
 # List of benefits types
-class Benefits(Base):
-    __tablename__ = 'benefits'
+class BenefitTypes(Base):
+    __tablename__ = 'benefitTypes'
 
     id = Column(Integer, primary_key=True)
 
     name = Column(String, nullable=False)
     description = Column(String, nullable=False)
 
-def getBenefits():
-    return dbSession.query(Benefits).all()
+def getBenefitTypes():
+    return dbSession.query(BenefitTypes).all()
+
+## -------------------------------------------------
+## Improvement
+## -------------------------------------------------
+class Improvement(Base):
+    __tablename__ = 'improvements'
+
+    id = Column(Integer, primary_key=True)
+
+    name = Column(String, nullable=False)
+    description = Column(String, nullable=False)
+
+    benefits = relationship("Benefit")
+
+## -------------------------------------------------
+## Benefit
+## -------------------------------------------------
+class Benefit(Base):
+    __tablename__ = 'benefits'    
+
+    id = Column(Integer, primary_key=True)
+
+    description = Column(String, nullable=False)
+
+    # Link to the BenefitType category
+    benefit_type = Column(Integer, ForeignKey('benefitTypes.id'))
+
+    # Improvement ID is used to build a relationship between improvements
+    # and episodes
+    parent_improvement = Column(Integer, ForeignKey('improvements.id'))
+    improvement = relationship("Improvement", back_populates="benefits")
 
 Base.metadata.create_all(engine)
 
@@ -63,12 +94,23 @@ if __name__ == "__main__":
     dbSession.add_all(testObjectives)
     dbSession.commit()
 
-    # Create some dummy benefits
-    testBenefits = [Benefits(name="Time",
+    # Create some dummy benefit types
+    testBenefits = [BenefitTypes(name="Time",
                              description="Users reduce the amount of time they need to spend reviewing work"),
-                    Benefits(name="Great Place to Work",
+                    BenefitTypes(name="Great Place to Work",
                              description="Users have access to best in class tooling, and feel listened to"),
-                    Benefits(name="Automation",
+                    BenefitTypes(name="Automation",
                              description="Increase quality through automation, and reduce effort")]
     dbSession.add_all(testBenefits)
+    dbSession.commit()
+
+    # Create some dummy improvements
+    testImprovements = Improvement(name="BeyondCompare",
+                                    description="Buying BeyondCompare and deploying through SE-Desktop")
+    improvementBenefits = Benefit(description="Faster reviews by being able to get accurate differentials",
+                                 benefit_type=testBenefits[0].id,
+                                 parent_improvement=testImprovements.id)
+    dbSession.add(testImprovements)
+    dbSession.commit()
+    dbSession.add(improvementBenefits)
     dbSession.commit()

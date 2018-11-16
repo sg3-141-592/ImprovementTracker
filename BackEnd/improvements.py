@@ -45,7 +45,7 @@ def addObjective(NewObjective):
 ## ----------------------------------------------------------
 ## Benefits
 ## ----------------------------------------------------------
-benefitsData = manageDb.getBenefits()
+benefitsData = manageDb.getBenefitTypes()
 
 def getBenefits():
         jsonBenefits = []

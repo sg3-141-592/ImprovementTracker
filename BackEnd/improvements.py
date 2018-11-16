@@ -22,26 +22,23 @@ def dismissAlert(DismissAlertContent):
 ## ----------------------------------------------------------
 ## Objectives
 ## ----------------------------------------------------------
-objectivesData = [{'id': 1,
-                   'name': "Great Place to Work",
-                   'description': "Improve the business for the employees"},
-                  {'id': 2,
-                   'name': "Lead Time Reduction",
-                   'description': "Get out products out the door quicker"},
-                  {'id': 3,
-                   'name': "Reduce Cost",
-                   'description': "Bring down the cost of our products"}]
+objectivesData = manageDb.getObjectives()
 
-
-def initObjectives():
-        print("Loading objectives data")
-
+# Convert the objectives data into json for webpage
 def getObjectives():
-        return objectivesData
+        jsonObjectives = []
+        for objective in objectivesData:
+                jsonObjectives.append(manageDb.as_dict(objective))
+        return jsonObjectives
 
+# Add a new objective based on JSON object
+# UNTESTED ---------
 def addObjective(NewObjective):
-        objectivesData.append({'name': NewObjective['name'],
-                               'description': NewObjective['description']})
+        newItem = manageDb.Objectives(name=NewObjective['name'],
+                                      description=NewObjective['description'])
+        objectivesData.append(newItem)
+        # Add the item to the database
+        manageDb.dbSession.add(objectivesData)
         return 200
 
 

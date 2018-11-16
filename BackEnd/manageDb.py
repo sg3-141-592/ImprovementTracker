@@ -9,9 +9,32 @@ engine = create_engine('sqlite:///improvementData.db', connect_args={'check_same
 # Create the table structure
 Base = declarative_base()
 
+# Convert an SQLite row as a table
+def as_dict(self):
+       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+## -------------------------------------------------
+## Objectives
+## -------------------------------------------------
 # List of objectives
-class ObjectivesType(Base):
+class Objectives(Base):
     __tablename__ = 'objectives'
+
+    id = Column(Integer, primary_key=True)
+
+    name = Column(String, nullable=False)
+    description = Column(String, nullable=False)
+
+
+def getObjectives():
+    return dbSession.query(Objectives).all()
+
+## -------------------------------------------------
+## Benefits
+## -------------------------------------------------
+# List of benefits types
+class Benefits(Base):
+    __tablename__ = 'benefits'
 
     id = Column(Integer, primary_key=True)
 
@@ -28,11 +51,11 @@ dbSession = Session()
 # Create some test data to get it started
 if __name__ == "__main__":
     # Create some dummy objectives
-    testObjectives = [ObjectivesType(name="Great Place to Work",
+    testObjectives = [Objectives(name="Great Place to Work",
                                      description="Improve the business for the employees"),
-                      ObjectivesType(name="Lead Time Reduction",
+                      Objectives(name="Lead Time Reduction",
                                      description="Get out products out the door quicker"),
-                      ObjectivesType(name="Reduce Cost",
+                      Objectives(name="Reduce Cost",
                                      description="Bring down the cost of our products"),]
     dbSession.add_all(testObjectives)
     dbSession.commit()

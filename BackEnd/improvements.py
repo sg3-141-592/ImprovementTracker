@@ -59,6 +59,9 @@ def getBenefits():
 improvementsData = manageDb.getImprovements()
 
 def getImprovements():
+        # Refresh the improvements data
+        improvementsData = manageDb.getImprovements()
+
         jsonImprovements = []
         for improvement in improvementsData:
                 item = manageDb.as_dict(improvement)

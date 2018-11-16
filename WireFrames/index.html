@@ -16,16 +16,15 @@
 
     <!-- Lodash -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.js"></script>
-
-    <!-- Markdown Editor -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/simplemde/1.11.2/simplemde.min.js"></script>
-    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simplemde/1.11.2/simplemde.min.css"/>
-
+    
     <!-- Application Themes -->
     <link type="text/css" rel="stylesheet" href="style.css"/>
 </head>
 <body>
     <div id="app" class="container-fluid">
+        <div class="row">
+            <h1 class="display-4">ImprovementTracker</h1>
+        </div>
         <div class="row">
             <div class="col">
 
@@ -40,8 +39,23 @@
                 <user-alert v-for="alert in alertData" :key=alert.id :alert-msg=alert.message></user-alert>
                 
                 <div class="row">
-                    <!-- Add improvement form -->
-                    <add-improvement></add-improvement>
+                    <div class="col">
+                        <b-form-input placeholder="Search" v-model="searchString"></b-form-input>
+                    </div>
+                    <div class="col-sm-2">
+                        <!-- Add improvement form -->
+                        <add-improvement></add-improvement>
+                    </div>
+                </div>
+
+                <!-- Show improvement data -->
+                <div class="row">
+                    <template>
+                        <b-table striped hover
+                         :items="improvementsData"
+                         :fields="fields"
+                         @row-clicked="rowClicked"></b-table>
+                    </template>
                 </div>
 
             </div>
@@ -60,7 +74,23 @@
             el: '#app',
             data: {
                 alertData: null,
-                objectivesData: null
+                objectivesData: null,
+                
+                // Table data
+                fields: [
+                    {
+                        key: 'name',
+                        label: 'Improvement',
+                        sortable: true
+                    },
+                    {
+                        key: 'description',
+                        label: 'Description'
+                    }
+                ],
+                improvementsData: [],
+
+                searchString: null
             },
             mounted () {
                 // Load alerts data
@@ -72,8 +102,15 @@
                     .get("http://127.0.0.1:8080/improvements/objectives")
                     .then(response => (this.objectivesData = response.data))
                     .catch(error => console.log(error));
+                axios
+                    .get("http://127.0.0.1:8080/improvements")
+                    .then(response => (this.improvementsData = response.data))
+                    .catch(error => console.log(error));
             },
             methods: {
+                rowClicked(record, index) {
+                    console.log(record);
+                }
             }
         });
     </script>

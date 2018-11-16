@@ -31,14 +31,7 @@
 
                 <!-- Improvement Filters -->
                 <h3>Filter</h3>
-                <b-form-group label="Objective">
-                    <b-form-checkbox-group v-model="objFilterSelected">
-                        <b-form-checkbox v-for="objective in objectivesData" 
-                         :value="objective.name" :key="objective.id">
-                            {{ objective.name }}
-                        </b-form-checkbox>
-                    </b-form-checkbox-group>
-                </b-form-group>
+                <filter-objectives :objectives=objectivesData></filter-objectives>
 
             </div>
             <div class="col-8 col-centered">
@@ -60,14 +53,14 @@
     <script src="userAlertComponent.js"></script>
     <script src="addBenefitsComponent.js"></script>
     <script src="addImprovementComponent.js"></script>
+    <script src="filterObjectivesComponent.js"></script>
     <script>
         // Main app component
         var app = new Vue({
             el: '#app',
             data: {
                 alertData: null,
-                objectivesData: null,
-                objFilterSelected: []
+                objectivesData: null
             },
             mounted () {
                 // Load alerts data

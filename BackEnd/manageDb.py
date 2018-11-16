@@ -107,10 +107,11 @@ if __name__ == "__main__":
     # Create some dummy improvements
     testImprovements = Improvement(name="BeyondCompare",
                                     description="Buying BeyondCompare and deploying through SE-Desktop")
-    improvementBenefits = Benefit(description="Faster reviews by being able to get accurate differentials",
-                                 benefit_type=testBenefits[0].id,
-                                 parent_improvement=testImprovements.id)
     dbSession.add(testImprovements)
     dbSession.commit()
+
+    improvementBenefits = Benefit(description="Faster reviews by being able to get accurate differentials",
+                                 benefit_type=testBenefits[1].id,
+                                 parent_improvement=testImprovements.id)
     dbSession.add(improvementBenefits)
     dbSession.commit()

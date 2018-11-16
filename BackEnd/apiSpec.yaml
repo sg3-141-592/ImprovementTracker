@@ -6,6 +6,33 @@ info:
   description: Demonstrator API for Improvement Tracker SaaS
 
 paths:
+# -----------------------------------
+# Improvements
+# -----------------------------------
+  /improvements:
+    get:
+      summary: Get list of improvements
+      responses:
+        200:
+          description: Successful get
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                name:
+                  type: string
+                description:
+                  type: string
+                benefits:
+                  type: array
+                  items:
+                    $ref: '#/definitions/BenefitType'
+# -----------------------------------
+# Alerts
+# -----------------------------------
   /improvements/alerts:
     get:
       summary: Get the alert messages
@@ -21,10 +48,8 @@ paths:
               properties:
                 id:
                   type: integer
-                  example: 1
                 message:
                   type: string
-                  example: Get started and create your first improvement!
     post:
       summary: Dismiss an alert message
       operationId: improvements.dismissAlert
@@ -40,6 +65,9 @@ paths:
       responses:
         200:
           description: OK
+# -----------------------------------
+# Objectives
+# -----------------------------------
   /improvements/objectives:
     get:
       summary: Get list of objectives
@@ -49,15 +77,9 @@ paths:
           description: JSON array of objectives to display
           schema:
             type: array
+            # Benefits and Objectives use the same schema
             items:
-              type: object
-              properties:
-                name:
-                  type: string
-                description:
-                  type: string
-                id:
-                  type: integer
+              $ref: '#/definitions/BenefitType'
     post:
       summary: Add new objective
       operationId: improvements.addObjective
@@ -69,14 +91,15 @@ paths:
             properties:
               name:
                 type: string
-                example: GPTW
               description:
                 type: string
-                example:  Improve morale
           required: true
       responses: 
         200:
           description: OK
+# -----------------------------------
+# Benefits
+# -----------------------------------
   /improvements/benefits:
     get:
       summary: Get list of benefit categories
@@ -87,11 +110,17 @@ paths:
           schema:
             type: array
             items:
-              type: object
-              properties:
-                name:
-                  type: string
-                description:
-                  type: string
-                id:
-                  type: integer
+              $ref: '#/definitions/BenefitType'
+# -----------------------------------
+# Type Definitions
+# -----------------------------------
+definitions:
+  BenefitType:
+    type: object
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer

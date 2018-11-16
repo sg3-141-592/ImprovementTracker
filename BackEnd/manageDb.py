@@ -10,8 +10,8 @@ engine = create_engine('sqlite:///improvementData.db', connect_args={'check_same
 Base = declarative_base()
 
 # Convert an SQLite row as a table
-def as_dict(self):
-       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+def as_dict(row):
+       return {c.name: getattr(row, c.name) for c in row.__table__.columns}
 
 ## -------------------------------------------------
 ## Objectives
@@ -41,6 +41,9 @@ class Benefits(Base):
     name = Column(String, nullable=False)
     description = Column(String, nullable=False)
 
+def getBenefits():
+    return dbSession.query(Benefits).all()
+
 Base.metadata.create_all(engine)
 
 # Session used to update the database
@@ -52,10 +55,20 @@ dbSession = Session()
 if __name__ == "__main__":
     # Create some dummy objectives
     testObjectives = [Objectives(name="Great Place to Work",
-                                     description="Improve the business for the employees"),
+                                 description="Improve the business for the employees"),
                       Objectives(name="Lead Time Reduction",
-                                     description="Get out products out the door quicker"),
+                                 description="Get out products out the door quicker"),
                       Objectives(name="Reduce Cost",
-                                     description="Bring down the cost of our products"),]
+                                 description="Bring down the cost of our products"),]
     dbSession.add_all(testObjectives)
+    dbSession.commit()
+
+    # Create some dummy benefits
+    testBenefits = [Benefits(name="Time",
+                             description="Users reduce the amount of time they need to spend reviewing work"),
+                    Benefits(name="Great Place to Work",
+                             description="Users have access to best in class tooling, and feel listened to"),
+                    Benefits(name="Automation",
+                             description="Increase quality through automation, and reduce effort")]
+    dbSession.add_all(testBenefits)
     dbSession.commit()

@@ -45,24 +45,10 @@ def addObjective(NewObjective):
 ## ----------------------------------------------------------
 ## Benefits
 ## ----------------------------------------------------------
-benefitsData = [{
-                    'id': 1,
-                    'name': "Time",
-                    'description': "Users reduce the amount of time they need to spend reviewing work"
-                },
-                {
-                    'id': 2,
-                    'name': "Great Place to Work",
-                    'description': "Users have access to best in class tooling, and feel listened to"
-                },
-                {
-                    'id': 3,
-                    'name': "Automation",
-                    'description': "Increase quality through automation, and reduce effort"
-                }]
-
-def initBenefits():
-        print("Loading Benefits Data")
+benefitsData = manageDb.getBenefits()
 
 def getBenefits():
-        return benefitsData
+        jsonBenefits = []
+        for benefit in benefitsData:
+                jsonBenefits.append(manageDb.as_dict(benefit))
+        return jsonBenefits

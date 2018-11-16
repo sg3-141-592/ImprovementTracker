@@ -30,11 +30,9 @@
         <div class="col-10 col-centered">
             <!-- Display user alerts -->
             <user-alert v-for="alert in alertData" :key=alert.id :alert-msg=alert.message></user-alert>
-
-            <b-btn v-b-model.modal1>New Improvement</b-btn>
             
             <!-- Add improvement form -->
-            <add-improvement></add-improvement>
+            <add-improvement id="newImpWindow"></add-improvement>
         </div>
         <div class="col"></div>
     </div>

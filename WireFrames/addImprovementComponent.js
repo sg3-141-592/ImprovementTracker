@@ -2,11 +2,12 @@ Vue.component('add-improvement', {
     template:
     `
     <!-- Main form-->
-    <div class="card">
-        <div class="card-header">
-            New Improvement
-        </div>
-        <div class="card-body">
+    <div>
+        <b-btn v-b-modal.addImpWindow>Add Improvement</b-btn>
+        <b-modal id="addImpWindow"
+                 title="New Improvement"
+                 size="lg"
+                 >
             <!-- -->
             <form>
 
@@ -36,21 +37,8 @@ Vue.component('add-improvement', {
                     </div>
                 </div>
 
-                <!-- Submit/Close Buttons -->
-                <div class="form-group row">
-                    <div class="col">
-
-                    </div>
-                    <div class="col">
-                        <div class="float-right">
-                            <b-button>Submit</b-button>
-                            <b-button>Close</b-button>
-                        </div>
-                    </div>
-                </div>
-
             </form>
-        </div>
+        </b-modal>
     </div>
     `,
     data: function () {

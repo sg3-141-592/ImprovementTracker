@@ -13,6 +13,12 @@ paths:
     get:
       summary: Get list of improvements
       operationId: improvements.getImprovements
+      parameters:
+        - name: id
+          in: query
+          type: integer
+          required: false
+          default: 0
       responses:
         200:
           description: Successful get

@@ -16,14 +16,14 @@ Vue.component('add-improvement', {
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Title</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" placeholder="...">
+                        <b-form-input type="text" v-model="name" placeholder="..."></b-form-input>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Description</label>
                     <div class="col-sm-10">
-                        <textarea rows="3" class="form-control" placeholder="..."></textarea>
+                        <b-form-textarea v-model="description" placeholder="..." :rows="3"></b-form-textarea>
                     </div>
                 </div>
 
@@ -44,6 +44,8 @@ Vue.component('add-improvement', {
     `,
     data: function () {
         return {
+            name: null,
+            description: null,
             benefitsData: null
         }
     },
@@ -59,15 +61,9 @@ Vue.component('add-improvement', {
         addImprovement () {
             axios
                 .post("http://127.0.0.1:8080/improvements", {
-                    benefits: [
-                        {
-                        description: "desc string",
-                        id: 1,
-                        name: "name string"
-                        }
-                    ],
-                    description: "desc string",
-                    name: "name string"
+                    benefits: this.benefitsData,
+                    description: this.description,
+                    name: this.name
                 })
                 .then(response => console.log(response))
                 .catch(error => console.log(error));

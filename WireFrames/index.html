@@ -38,11 +38,11 @@
                 <!-- Display user alerts -->
                 <user-alert v-for="alert in alertData" :key=alert.id :alert-msg=alert.message></user-alert>
                 
-                <div class="row">
+                <div class="row my-4">
                     <div class="col">
                         <b-form-input placeholder="Search" v-model="searchString"></b-form-input>
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-4">
                         <!-- Add improvement form -->
                         <add-improvement></add-improvement>
                     </div>
@@ -109,7 +109,7 @@
             },
             methods: {
                 rowClicked(record, index) {
-                    console.log(record);
+                    console.log("A");
                 }
             }
         });

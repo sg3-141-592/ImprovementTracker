@@ -62,17 +62,29 @@ def getBenefits():
 ## ----------------------------------------------------------
 improvementsData = manageDb.getImprovements()
 
-def getImprovements():
+def getImprovements(id):
         # Refresh the improvements data
         improvementsData = manageDb.getImprovements()
 
         jsonImprovements = []
-        for improvement in improvementsData:
-                item = manageDb.as_dict(improvement)
+        item = None
+        
+        # If default id parameter 0 is passed then return the whole list
+        if id == 0:
+                for improvement in improvementsData:
+                        item = manageDb.as_dict(improvement)
+                        item['benefits'] = []
+                        for a in improvement.benefits:
+                                item['benefits'].append(manageDb.as_dict(a))
+                        jsonImprovements.append(item)
+        # Find the specific improvement
+        else:
+                match = next((improvement for improvement in improvementsData if manageDb.as_dict(improvement)['id'] == id),None)
+                item = manageDb.as_dict(match)
                 item['benefits'] = []
-                for a in improvement.benefits:
+                for a in match.benefits:
                         item['benefits'].append(manageDb.as_dict(a))
-                jsonImprovements.append(item)
+        jsonImprovements.append(item)
         return jsonImprovements
 
 # Need to look at removing unused "NAME" field
@@ -89,7 +101,7 @@ def addImprovement(NewImprovement):
                 benefits.append(newBenefit)
 
         newItem.benefits = benefits
-        
+
         manageDb.dbSession.add(newItem)
         manageDb.dbSession.commit()
 

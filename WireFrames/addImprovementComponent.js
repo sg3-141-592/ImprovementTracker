@@ -57,11 +57,17 @@ Vue.component('add-improvement', {
     methods: {
         // Add new improvement from form
         addImprovement () {
-            console.log("Adding Improvement");
             axios
-                .post("http://127.0.0.1:8080/improvements/benefits", {
-                    description: "desc",
-                    name: "name"
+                .post("http://127.0.0.1:8080/improvements", {
+                    benefits: [
+                        {
+                        description: "desc string",
+                        id: 1,
+                        name: "name string"
+                        }
+                    ],
+                    description: "desc string",
+                    name: "name string"
                 })
                 .then(response => console.log(response))
                 .catch(error => console.log(error));

@@ -22,23 +22,27 @@ def dismissAlert(DismissAlertContent):
 ## ----------------------------------------------------------
 ## Objectives
 ## ----------------------------------------------------------
-objectivesData = manageDb.getObjectives()
+objectivesData = None
 
 # Convert the objectives data into json for webpage
 def getObjectives():
+        # Get latest from database
+        objectivesData = manageDb.getObjectives()
+
         jsonObjectives = []
         for objective in objectivesData:
                 jsonObjectives.append(manageDb.as_dict(objective))
         return jsonObjectives
 
 # Add a new objective based on JSON object
-# UNTESTED ---------
 def addObjective(NewObjective):
         newItem = manageDb.Objectives(name=NewObjective['name'],
                                       description=NewObjective['description'])
-        objectivesData.append(newItem)
+        
         # Add the item to the database
-        manageDb.dbSession.add(objectivesData)
+        manageDb.dbSession.add(newItem)
+        manageDb.dbSession.commit()
+
         return 200
 
 
@@ -70,3 +74,23 @@ def getImprovements():
                         item['benefits'].append(manageDb.as_dict(a))
                 jsonImprovements.append(item)
         return jsonImprovements
+
+# Need to look at removing unused "NAME" field
+def addImprovement(NewImprovement):
+        # Create the new improvement object
+        newItem = manageDb.Improvement(name=NewImprovement['name'],
+                                       description=NewImprovement['description'])
+        
+        benefits = []
+        # Create the benefits objects
+        for benefit in NewImprovement['benefits']:
+                newBenefit = manageDb.Benefit(description=benefit['description'],
+                                              benefit_type=benefit['id'])
+                benefits.append(newBenefit)
+
+        newItem.benefits = benefits
+        
+        manageDb.dbSession.add(newItem)
+        manageDb.dbSession.commit()
+
+        return 200

@@ -31,6 +31,26 @@ paths:
                   type: array
                   items:
                     $ref: '#/definitions/BenefitType'
+    post:
+      summary: Add a new improvement
+      operationId: improvements.addImprovement
+      parameters:
+        - name: NewImprovement
+          in: body
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              description:
+                type: string
+              benefits:
+                type: array
+                items:
+                  $ref: '#/definitions/BenefitType'
+      responses:
+        200:
+          description: Successful add
 # -----------------------------------
 # Alerts
 # -----------------------------------

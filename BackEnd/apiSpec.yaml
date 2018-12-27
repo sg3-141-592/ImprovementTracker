@@ -106,7 +106,7 @@ paths:
       summary: Get list of benefit categories
       operationId: improvements.getBenefits
       responses:
-        200:
+        200:  
           description: JSON array of benefits to display
           schema:
             type: array

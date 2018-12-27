@@ -3,10 +3,11 @@ Vue.component('add-improvement', {
     `
     <!-- Main form-->
     <div>
-        <b-btn v-b-modal.addImpWindow>Add Improvement</b-btn>
+        <b-btn v-b-modal.addImpWindow>Add</b-btn>
         <b-modal id="addImpWindow"
                  title="New Improvement"
                  size="lg"
+                 @ok="addImprovement"
                  >
             <!-- -->
             <form>
@@ -52,5 +53,18 @@ Vue.component('add-improvement', {
             .get("http://127.0.0.1:8080/improvements/benefits")
             .then(response => (this.benefitsData = response.data))
             .catch(error => console.log(error));
+    },
+    methods: {
+        // Add new improvement from form
+        addImprovement () {
+            console.log("Adding Improvement");
+            axios
+                .post("http://127.0.0.1:8080/improvements/benefits", {
+                    description: "desc",
+                    name: "name"
+                })
+                .then(response => console.log(response))
+                .catch(error => console.log(error));
+        }
     }
 });
